@@ -23,15 +23,21 @@ public class Percolation {
     public void open(int row, int col) throws IllegalArgumentException {
 
         int index = (row-1) * n + col;
-        if (index <= 0 || index > arr.length) {throw new IllegalArgumentException();}
+        if (row <= 0 || row > n || col <= 0 || col > n) {throw new IllegalArgumentException();}
         boolArr[index] = true;
 
     }
 
     public boolean isOpen(int row, int col) {
         int index = (row-1) * n + col;
-        if (index <= 0 || index > arr.length) {throw new IllegalArgumentException();}
+        if (row <= 0 || row > n || col <= 0 || col > n) {throw new IllegalArgumentException();}
         return boolArr[index];
+    }
+
+    public boolean isFull(int row, int col) {
+        int index = (row-1) * n + col;
+        if (row <= 0 || row > n || col <= 0 || col > n) {throw new IllegalArgumentException();}
+        return !boolArr[index];
     }
 
     public int numberOfOpenSites() {
