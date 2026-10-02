@@ -26,6 +26,18 @@ public class Percolation {
         if (row <= 0 || row > n || col <= 0 || col > n) {throw new IllegalArgumentException();}
         boolArr[index] = true;
 
+        if (row == 1) {uf.union(0,index);}
+
+        if (row == n) {uf.union(n*n+1,index);}
+
+        if (row > 1 && boolArr[index - n]) {uf.union(index,index-n);}
+
+        if (row < n && boolArr[index + n]) {uf.union(index,index+n);}
+
+        if (col > 1 && boolArr[index -1]) {uf.union(index,index-1);}
+
+        if (col < n && boolArr[index + 1]) {uf.union(index,index+1);}
+
     }
 
     public boolean isOpen(int row, int col) {
@@ -37,15 +49,19 @@ public class Percolation {
     public boolean isFull(int row, int col) {
         int index = (row-1) * n + col;
         if (row <= 0 || row > n || col <= 0 || col > n) {throw new IllegalArgumentException();}
-        return !boolArr[index];
+        return boolArr[index] && uf.find(index) == uf.find(0);
     }
 
     public int numberOfOpenSites() {
         int count = 0;
-        for (int i = 0; i < arr.length; i++) {
-            if (boolArr[i] = true) {count++;}
+        for (int i = 1; i < arr.length-1; i++) {
+            if (boolArr[i] == true) {count++;}
         }
         return count;
+    }
+
+    public boolean percolates() {
+        return uf.find(0) == uf.find(n*n+1);
     }
 
 
